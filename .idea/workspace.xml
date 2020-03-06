@@ -22,7 +22,11 @@
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1YkW6n6G64kAPUngBmzBFEVGm32" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -59,6 +63,8 @@
       <workItem from="1583486900824" duration="165000" />
       <workItem from="1583500697043" duration="65000" />
       <workItem from="1583500797438" duration="5000" />
+      <workItem from="1583501270115" duration="8000" />
+      <workItem from="1583501326855" duration="5000" />
     </task>
     <servers />
   </component>
