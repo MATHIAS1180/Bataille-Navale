@@ -1,16 +1,16 @@
 
 #include <stdio.h>
 #include <windows.h>
-
 #pragma set_character_execution("UTF-8")
+
 int choixmenu;
 
-
+//Affiche la grille de jeu.
 void jeu() {
 
 }
 
-
+//Affiche l'aide de jeu
 void aide() {
     int retour;
     do {
@@ -31,12 +31,13 @@ void aide() {
                "\nUn bateau est coulé quand toutes ses cases sont touchées\n"
 
                "Une partie se termine quand un joueur coule tout les bateaux adverses.\n");
+        printf("\nAppuyer sur 1 pour retourner au menu :");
         scanf("%d",&retour);
     } while (retour != 1);
 
 }
 
-
+//Affiche le menu et redirige vers la redirection de notre choix.
 int menu() {
     system("cls");
     printf("\nBataille Navale");
