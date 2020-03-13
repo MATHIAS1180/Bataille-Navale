@@ -1,7 +1,6 @@
 
 #include <stdio.h>
 #include <windows.h>
-
 #pragma set_character_execution("UTF-8")
 
 int choixmenu;
