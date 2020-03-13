@@ -6,6 +6,24 @@
 
 int choixmenu;
 
+//Demande de choisir un pseudo
+int pseudo() {
+    char pseudo[20];
+    system("cls");
+    printf("------- Pseudo -------\n");
+    printf("Quel est votre pseudo:");
+    scanf("%s", pseudo);
+    printf("Daccord %s !\n", pseudo);
+    system("pause");
+}
+
+void Scores(){
+    int scores;
+  printf("Scores :\n");
+  printf("\n1- %s...%c...",pseudo,scores);
+
+}
+
 //Affiche la grille de jeu.
 void jeu() {
     int InterfaceDeJeu();
@@ -23,22 +41,12 @@ void jeu() {
     }
     printf("\n\n");
     printf(" B = Bateau\n O = Dans l'eau\n X = Touché\n Z = Touché coulé");
-    printf("Choisisez ou tirer :");
+    printf("\nChoisisez ou tirer :");
     scanf("%d",tirer);
 
 }
 
-//Demande de choisir un pseudo
-int pseudo() {
-    int retour;
-    char pseudo[20];
-    system("cls");
-    printf("------- Pseudo -------\n");
-    printf("Quel est votre pseudo:");
-    scanf("%s", pseudo);
-    printf("Daccord %s !\n", pseudo);
-    system("pause");
-}
+
 
 
 //Affiche l'aide de jeu
@@ -84,6 +92,7 @@ int menu() {
             pseudo();
             break;
         case 3 :
+            Scores();
             break;
         case 4 :
             aide();
