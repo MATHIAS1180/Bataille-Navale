@@ -7,8 +7,21 @@ int choixmenu;
 
 //Affiche la grille de jeu.
 void jeu() {
+    int InterfaceDeJeu();
+    system("cls");
+        printf("--- Bataille Navale ---\n\n");
+        printf("     { 1 }  { 2 }  { 3 }  { 4 }  { 5 }  { 6 }  { 7 }  { 8 }  { 9 } { 1 0 } \n");
+        for(char i = 'A'; i < 'K'; i++) {
+            printf("\n------------------------------------------------------------------------------\n");
+            printf("%c    ", i);
+            printf("{ }    ");
+            for(char e = 0; e < 5 ; e++){
+                printf("{ }    { }    ");
+            }
+        }
+        system("Pause");
+    }
 
-}
 
 void pseudo(){
     char pseudo;
@@ -66,6 +79,7 @@ int menu() {
     fflush(stdin);
     switch (choixmenu) {
         case 1 :
+            jeu();
             break;
         case 2 :
             pseudo();
