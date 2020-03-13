@@ -18,9 +18,8 @@ int pseudo() {
 
 void Scores(){
     int scores;
-  printf("Scores :\n");
-  printf("\n1- %s...%c...",pseudo,scores);
-
+    system("cls");
+  printf("-----Scores----- :\n");
 }
 
 //Affiche la grille de jeu.
