@@ -10,6 +10,21 @@ void jeu() {
 
 }
 
+void pseudo(){
+    char pseudo;
+    int retour;
+    do {
+        system("cls");
+        printf("Choisisez un pseudo :");
+        scanf("%c", &pseudo);
+        printf("Daccord %c !", pseudo);
+
+        scanf("%d", &retour);
+    }
+    while(retour !=1);
+    system("pause");
+}
+
 //Affiche l'aide de jeu
 void aide() {
     int retour;
@@ -53,6 +68,7 @@ int menu() {
         case 1 :
             break;
         case 2 :
+            pseudo();
             break;
         case 3 :
             break;
