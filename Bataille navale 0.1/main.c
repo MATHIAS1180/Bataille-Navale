@@ -69,7 +69,7 @@ void aide() {
 
 }
 
-void Redirection() {
+void Redirection(choix) {
     switch (choix) {
         case 1 :
             printf("\nVous avez choisi de lancer une partie ");
