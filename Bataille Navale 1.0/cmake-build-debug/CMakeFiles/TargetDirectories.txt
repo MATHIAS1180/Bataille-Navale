@@ -1,3 +1,3 @@
-C:/Users/mathi/CLionProjects/Bataille Navale 1.0/cmake-build-debug/CMakeFiles/Bataille_Navale_1_0.dir
-C:/Users/mathi/CLionProjects/Bataille Navale 1.0/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/mathi/CLionProjects/Bataille Navale 1.0/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/mathi/Bataille-Navale/Bataille Navale 1.0/cmake-build-debug/CMakeFiles/Bataille_Navale_1_0.dir
+C:/Users/mathi/Bataille-Navale/Bataille Navale 1.0/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/mathi/Bataille-Navale/Bataille Navale 1.0/cmake-build-debug/CMakeFiles/rebuild_cache.dir
