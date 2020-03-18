@@ -1,69 +1,183 @@
-/**
- * Auteur : Mathias Bourqui
- * Date : 17.03.2020
- *
- */
+    /**
+     * Author : Mathias Bourqui
+     * Date : 17.03.2020
+     * Description :
+     * Version : 0.1
+     */
+
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <windows.h>
+    // Permet d'afficher les accents (ou caractère spéciale ou latin)
+    #pragma set_character_execution("UTF-8")
+
+    int Menu();
+
+    void Jeu();
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <windows.h>
+    //Affiche l'aide de jeu de la batille navale
+    void Aide() {
+        system("cls");
+        printf("\n------Aide------\n");
+        printf("\n"
+               "Chaque joueur possède:\n"
+               "\n"
+               "Un bateau de 5 cases\n"
+               "Un bateau de 4 cases\n"
+               "Deux bateau de 3 cases\n"
+               "Un bateaux de 2 cases\n");
+        printf("\n"
+               "Chacun son tour, chaque joueur tire un obus sur une case de la carte adverse.\n"
 
-#pragma set_character_execution("UTF-8")
+               "\nUn bateau est touché quand un obus atterrit sur une des cases du bateau.\n"
 
-int Menu();
+               "\nUn bateau est coulé quand toutes ses cases sont touchées\n"
 
-void Jeu();
-
-
-
-//Affiche l'aide de jeu
-void Aide() {
-    system("cls");
-    printf("\n------Aide------\n");
-    printf("\n"
-           "Chaque joueur possède:\n"
-           "\n"
-           "Un bateau de 5 cases\n"
-           "Un bateau de 4 cases\n"
-           "Deux bateau de 3 cases\n"
-           "Un bateaux de 2 cases\n");
-    printf("\n"
-           "Chacun son tour, chaque joueur tire un obus sur une case de la carte adverse.\n"
-
-           "\nUn bateau est touché quand un obus atterrit sur une des cases du bateau.\n"
-
-           "\nUn bateau est coulé quand toutes ses cases sont touchées\n"
-
-           "Une partie se termine quand un joueur coule tout les bateaux adverses.\n");
-    printf("\n");
-    system("pause");
-    Menu();
-}
+               "Une partie se termine quand un joueur coule tout les bateaux adverses.\n");
+        printf("\n");
+        system("pause");
+    // redirige vers le menu
+        Menu();
+    }
+    //Demande de choisir un pseudo
+    int pseudo() {
+        char pseudo[20];
+        system("cls");
+        printf("------- Pseudo -------\n");
+        printf("Quel est votre pseudo:");
+        scanf("%s", pseudo);
+        printf("Daccord %s !\n", pseudo);
+        system("pause");
+    // Redirige vers le menu
+        Menu();
+    }
 
 
-//Demande de choisir un pseudo
-int pseudo() {
-    char pseudo[20];
-    system("cls");
-    printf("------- Pseudo -------\n");
-    printf("Quel est votre pseudo:");
-    scanf("%s", pseudo);
-    printf("Daccord %s !\n", pseudo);
-    system("pause");
-    Menu();
-}
 
-// indiquant le nombre case pour chaque bateaux.
-int Boat1Life = 2;
-int Boat2Life = 3;
-int Boat3Life = 3;
-int Boat4Life = 4;
-int Boat5Life = 5;
-int Try;
-// Grille de base
-int Restart[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+
+    // Initialisations des variables pour les HP des différent bateaux + déclaration de la variables du nombres d'essaie
+    int BLife_1 = 2;
+    int BLife_2 = 3;
+    int BLife_3 = 3;
+    int BLife_4 = 4;
+    int BLife_5 = 5;
+    int Nb_Essaie;
+
+    // Ajout ds grilles pour elancer une partie + des bateaux et des tableaux afficher en jeu
+    // les 0 sont vides et les 1 sont les bateaux
+    int Restart[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                           {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+
+    int Grille_A[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+
+        int B_1[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+
+        int B_1_Model[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+
+        int B_2[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 1}};
+
+        int B_2_Model[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 1}};
+
+        int B_3[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 1, 1, 1, 0, 0}};
+
+        int B_3_Model[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 1, 1, 1, 0, 0}};
+
+        int B_4[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 1, 1, 1, 1, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+
+        int B_4_Model[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 1, 1, 1, 1, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+
+        int B_5[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                       {0, 0, 0, 1, 1, 1, 1, 1, 0, 0},
                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -73,340 +187,244 @@ int Restart[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
-int Gride[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-// Grille du bateau 1
-int Boat1[10][10] = {{0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+        int B_5_Model[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 1, 1, 1, 1, 1, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+    // Variables de positions
+    int A;
+    int B;
 
-int Boat1Model[10][10] = {{0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-// Grille du bateau 2
-int Boat2[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {1, 1, 1, 0, 0, 0, 0, 0, 0, 0}};
-
-int Boat2Model[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {1, 1, 1, 0, 0, 0, 0, 0, 0, 0}};
-// Grille du bateau 3
-int Boat3[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 1, 1, 1}};
-
-int Boat3Model[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 1, 1, 1}};
-// Grille du bateau 4
-int Boat4[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-
-int Boat4Model[10][10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-// Grille du bateau 5
-int Boat5[10][10] = {{1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-
-int Boat5Model[10][10] = {{1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-int y;
-int x;
-
-// indique au programme a tirer
-void Tirer() {
-    if (Boat5[x - 1][y - 1] == 1) {
-        Gride[x - 1][y - 1] = 1;
-        Boat5[x - 1][y - 1] = 0;
-        Boat5Life = Boat5Life - 1;
-        Try = Try + 1;
-    } else {
-        if (Boat4[x - 1][y - 1] == 1) {
-            Gride[x - 1][y - 1] = 1;
-            Boat4[x - 1][y - 1] = 0;
-            Try = Try + 1;
-            Boat4Life = Boat4Life - 1;
+    // Fonctions indiquant quelle bateaux est touchées ou, permetre de definir un tir qui est coulé ou touché/coulé
+    void Tirer() {
+        if (B_5[B - 1][A - 1] == 1) {
+            Grille_A[B - 1][A - 1] = 1;
+            B_5[B - 1][A - 1] = 0;
+            BLife_5 = BLife_5 - 1;
+            Nb_Essaie = Nb_Essaie + 1;
         } else {
-            if (Boat3[x - 1][y - 1] == 1) {
-                Gride[x - 1][y - 1] = 1;
-                Boat3[x - 1][y - 1] = 0;
-                Try = Try + 1;
-                Boat3Life = Boat3Life - 1;
+            if (B_4[B - 1][A - 1] == 1) {
+                Grille_A[B - 1][A - 1] = 1;
+                B_4[B - 1][A - 1] = 0;
+                Nb_Essaie = Nb_Essaie + 1;
+                BLife_4 = BLife_4 - 1;
             } else {
-                if (Boat2[x - 1][y - 1] == 1) {
-                    Gride[x - 1][y - 1] = 1;
-                    Boat2[x - 1][y - 1] = 0;
-                    Boat2Life = Boat2Life - 1;
-                    Try = Try + 1;
+                if (B_3[B - 1][A - 1] == 1) {
+                    Grille_A[B - 1][A - 1] = 1;
+                    B_3[B - 1][A - 1] = 0;
+                    Nb_Essaie = Nb_Essaie + 1;
+                    BLife_3 = BLife_3 - 1;
                 } else {
-                    if (Boat1[x - 1][y - 1] == 1) {
-                        Gride[x - 1][y - 1] = 1;
-                        Boat1[x - 1][y - 1] = 0;
-                        Boat1Life = Boat1Life - 1;
-                        Try = Try + 1;
+                    if (B_2[B - 1][A - 1] == 1) {
+                        Grille_A[B - 1][A - 1] = 1;
+                        B_2[B - 1][A - 1] = 0;
+                        BLife_2 = BLife_2 - 1;
+                        Nb_Essaie = Nb_Essaie + 1;
                     } else {
-                        if (Gride[x - 1][y - 1] == 1) {
-                            //Si déjà touché, ne rien faire
+                        if (B_1[B - 1][A - 1] == 1) {
+                            Grille_A[B - 1][A - 1] = 1;
+                            B_1[B - 1][A - 1] = 0;
+                            BLife_1 = BLife_1 - 1;
+                            Nb_Essaie = Nb_Essaie + 1;
                         } else {
-                            if (Gride[x - 1][y - 1] == 2) {
-                                //Si déjà tiré, ne rien faire
+                            if (Grille_A[B - 1][A - 1] == 1) {
+                                //Si (déjà) touché : rien faire
                             } else {
-                                Gride[x - 1][y - 1] = 2;
-                                Try = Try + 1;
+                                if (Grille_A[B - 1][A - 1] == 2) {
+                                    //Si (déjà tiré) : ne rien faire
+                                } else {
+                                    Grille_A[B - 1][A - 1] = 2;
+                                    Nb_Essaie = Nb_Essaie + 1;
+                                }
                             }
                         }
                     }
                 }
             }
         }
+    // Redirige vers le jeu
+        Jeu();
     }
-    Jeu();
-}
 
-// Recommencer une nouvelle partie
-void ResetGame() {
-    for (int o = 0; o < 11; o++) {
-        Gride[o][o] = Restart[o][o];
-        for (int p = 1; p < 10; p++) {
-            Gride[o + p][o] = Restart[o + p][o];
-        }
-        for (int l = 1; l < 10; l++) {
-            Gride[o][o + l] = Restart[o][o + l];
-        }
+    int Scores(){
+        int Score;
+        Score = 10 / Nb_Essaie *10;
+        return Score;
     }
-    for (int o = 0; o < 11; o++) {
-        Boat1[o][o] = Boat1Model[o][o];
-        for (int p = 1; p < 10; p++) {
-            Boat1[o + p][o] = Boat1Model[o + p][o];
-        }
-        for (int l = 1; l < 10; l++) {
-            Boat1[o][o + l] = Boat1Model[o][o + l];
-        }
-    }
-    for (int o = 0; o < 11; o++) {
-        Boat2[o][o] = Boat2Model[o][o];
-        for (int p = 1; p < 10; p++) {
-            Boat2[o + p][o] = Boat2Model[o + p][o];
-        }
-        for (int l = 1; l < 10; l++) {
-            Boat2[o][o + l] = Boat2Model[o][o + l];
-        }
-    }
-    for (int o = 0; o < 11; o++) {
-        Boat3[o][o] = Boat3Model[o][o];
-        for (int p = 1; p < 10; p++) {
-            Boat3[o + p][o] = Boat3Model[o + p][o];
-        }
-        for (int l = 1; l < 10; l++) {
-            Boat3[o][o + l] = Boat3Model[o][o + l];
-        }
-    }
-    for (int o = 0; o < 11; o++) {
-        Boat4[o][o] = Boat4Model[o][o];
-        for (int p = 1; p < 10; p++) {
-            Boat4[o + p][o] = Boat4Model[o + p][o];
-        }
-        for (int l = 1; l < 10; l++) {
-            Boat4[o][o + l] = Boat4Model[o][o + l];
-        }
-    }
-    for (int o = 0; o < 11; o++) {
-        Boat5[o][o] = Boat5Model[o][o];
-        for (int p = 1; p < 10; p++) {
-            Boat5[o + p][o] = Boat5Model[o + p][o];
-        }
-        for (int l = 1; l < 10; l++) {
-            Boat5[o][o + l] = Boat5Model[o][o + l];
-        }
-    }
-    Try = 0;
-    Boat1Life = 2;
-    Boat2Life = 3;
-    Boat3Life = 3;
-    Boat4Life = 4;
-    Boat5Life = 5;
-}
 
-// Plateau de jeu de la batille navale
-void Jeu() {
-    system("cls");
-    int ContreTorpilleurNumber = 1;
-    printf("----------------------------- Bataille Navale -----------------------------\n\n");
-    printf("     {  1  }{  2  }{  3  }{  4  }{  5  }{  6  }{  7  }{  8  }{  9  }{ 10  }\n");
-    for (char i = 1; i < 11; i++) {
-        printf("\n---------------------------------------------------------------------------\n");
-        if (i < 10) {
-            printf("%d    ", i);
-        } else {
-            printf("%d   ", i);
+
+    // Remet la grille a neuf en utilisant les tableaux models + Réinitialisation des variables
+    void ResetGame() {
+        for (int o = 0; o < 11; o++) {
+            Grille_A[o][o] = Restart[o][o];
+            for (int p = 1; p < 10; p++) {
+                Grille_A[o + p][o] = Restart[o + p][o];
+            }
+            for (int l = 1; l < 10; l++) {
+                Grille_A[o][o + l] = Restart[o][o + l];
+            }
         }
-        for (char e = 1; e < 11; e++) {
-            if (Gride[i - 1][e - 1] == 1) {
-                printf("{  X  }");
+        for (int o = 0; o < 11; o++) {
+            B_1[o][o] = B_1_Model[o][o];
+            for (int p = 1; p < 10; p++) {
+                B_1[o + p][o] = B_1_Model[o + p][o];
+            }
+            for (int l = 1; l < 10; l++) {
+                B_1[o][o + l] = B_1_Model[o][o + l];
+            }
+        }
+        for (int o = 0; o < 11; o++) {
+            B_2[o][o] = B_2_Model[o][o];
+            for (int p = 1; p < 10; p++) {
+                B_2[o + p][o] = B_2_Model[o + p][o];
+            }
+            for (int l = 1; l < 10; l++) {
+                B_2[o][o + l] = B_2_Model[o][o + l];
+            }
+        }
+        for (int o = 0; o < 11; o++) {
+            B_3[o][o] = B_3_Model[o][o];
+            for (int p = 1; p < 10; p++) {
+                B_3[o + p][o] = B_3_Model[o + p][o];
+            }
+            for (int l = 1; l < 10; l++) {
+                B_3[o][o + l] = B_3_Model[o][o + l];
+            }
+        }
+        for (int o = 0; o < 11; o++) {
+            B_4[o][o] = B_4_Model[o][o];
+            for (int p = 1; p < 10; p++) {
+                B_4[o + p][o] = B_4_Model[o + p][o];
+            }
+            for (int l = 1; l < 10; l++) {
+                B_4[o][o + l] = B_4_Model[o][o + l];
+            }
+        }
+        for (int o = 0; o < 11; o++) {
+            B_5[o][o] = B_5_Model[o][o];
+            for (int p = 1; p < 10; p++) {
+                B_5[o + p][o] = B_5_Model[o + p][o];
+            }
+            for (int l = 1; l < 10; l++) {
+                B_5[o][o + l] = B_5_Model[o][o + l];
+            }
+        }
+    // Indique chaque vie des bateaux
+    // Une vie est une case d'un bateaux
+        Nb_Essaie = 0;
+        BLife_1 = 2;
+        BLife_2 = 3;
+        BLife_3 = 3;
+        BLife_4 = 4;
+        BLife_5 = 5;
+    }
+
+    // Plateau de jeu de la batille navale
+    void Jeu() {
+        system("cls");
+        int ContreTorpilleurNumber = 1;
+        printf("----------------------------- Bataille Navale -----------------------------\n\n");
+        printf("     {  1  }{  2  }{  3  }{  4  }{  5  }{  6  }{  7  }{  8  }{  9  }{ 10  }\n");
+        for (char i = 1; i < 11; i++) {
+            printf("\n---------------------------------------------------------------------------\n");
+            if (i < 10) {
+                printf("%d    ", i);
             } else {
-                if (Gride[i - 1][e - 1] == 2) {
-                    printf("{  O  }");
+                printf("%d   ", i);
+            }
+            for (char e = 1; e < 11; e++) {
+                if (Grille_A[i - 1][e - 1] == 1) {
+                    printf("{  X  }");
                 } else {
-                    printf("{  +  }");
+                    if (Grille_A[i - 1][e - 1] == 2) {
+                        printf("{  O  }");
+                    } else {
+                        printf("{     }");
+                    }
                 }
             }
         }
-    }
-    if (Boat1Life == 0) {
-        printf("\n\nTorpilleur coulé !");
-    }
-    if (Boat2Life == 0) {
-        printf("\n\nContre Torpilleur %d coulé !", ContreTorpilleurNumber);
-        ContreTorpilleurNumber++;
-    }
-    if (Boat3Life == 0) {
-        printf("\n\nContre Torpilleur %d coulé !", ContreTorpilleurNumber);
-        ContreTorpilleurNumber++;
-    }
-    if (Boat4Life == 0) {
-        printf("\n\nCroiseur coulé !");
-    }
-    if (Boat5Life == 0) {
-        printf("\n\nPorte Avion coulé !");
-    }
-    if (Boat1Life == 0 && Boat2Life == 0 && Boat3Life == 0 && Boat4Life == 0 && Boat5Life == 0) {
-        int Score = Score();
-        printf("\n\nVotre score est de %d points\n\n", Score);
-        system("Pause");
-        ResetGame();
-        Menu();
-    } else {
-        printf("\n\n");
-        printf("O = A l'eau\n");
-        printf("X = Touché");
-        printf("\n\nX = ");
-        scanf("%d", &y);
-        fflush(stdin);
-        printf("Y = ");
-        scanf("%d", &x);
-        fflush(stdin);
-        Tirer();
-    }
-}
-
-// Affiche le menu principal de la Bataille navale
-int Menu() {
-    int choixmenu;
-    {
-        system("cls");
-        printf("\nBataille Navale");
-        printf("\n1-Jouer\n");
-        printf("2-Pseudo\n");
-        printf("3-Aide\n");
-        printf("4-Quitter\n");
-        printf("\nFaite votre choix :");
-        scanf("%d", &choixmenu);
-        fflush(stdin);
-// Affiche le choix choisi par l'utilisateur
-        switch (choixmenu) {
-            case 1 :
-                Jeu();
-                break;
-            case 2 :
-                pseudo();
-                break;
-            case 3 :
-                Aide();
-                break;
-            case 4 :
-                break;
-
+    // Indique les bateaux coulé au cours de la partie
+        if (BLife_1 == 0) {
+            printf("\n\nTorpilleur coulé !");
+        }
+        if (BLife_2 == 0) {
+            printf("\n\nContre Torpilleur %d coulé !", ContreTorpilleurNumber);
+            ContreTorpilleurNumber++;
+        }
+        if (BLife_3 == 0) {
+            printf("\n\nContre Torpilleur %d coulé !", ContreTorpilleurNumber);
+            ContreTorpilleurNumber++;
+        }
+        if (BLife_4 == 0) {
+            printf("\n\nCroiseur coulé !");
+        }
+        if (BLife_5 == 0) {
+            printf("\n\nPorte Avion coulé !");
+        }
+        if (BLife_1 == 0 && BLife_2 == 0 && BLife_3 == 0 && BLife_4 == 0 && BLife_5 == 0) {
+            int Score = Scores();
+            printf("\n\nVotre nombre de point est : %d points\n\n", Score);
+            system("Pause");
+            ResetGame();
+            Menu();
+        } else {
+            printf("\n\n");
+            printf("O = A l'eau\n");
+            printf("X = Touché");
+            printf("\n\nA = ");
+            scanf("%d", &A);
+            fflush(stdin);
+            printf("B = ");
+            scanf("%d", &B);
+            fflush(stdin);
+            Tirer();
         }
     }
-}
 
-int main() {
-    SetConsoleOutputCP(65001);
+    // Affiche le menu principal de la Bataille navale
+    // Demande du choix a l'utilisateur
+    int Menu() {
+        int choixmenu;
+        {
+            system("cls");
+            printf("\nBataille Navale");
+            printf("\n1-Jouer\n");
+            printf("2-Pseudo\n");
+            printf("3-Aide\n");
+            printf("4-Quitter\n");
+            printf("\nFaite votre choix :");
+            scanf("%d", &choixmenu);
+            fflush(stdin);
+    // Affiche le choix choisi par l'utilisateur
+            switch (choixmenu) {
+                case 1 :
+                    Jeu();
+                    break;
+                case 2 :
+                    pseudo();
+                    break;
+                case 3 :
+                    Aide();
+                    break;
+                case 4 :
+                    break;
 
-    Menu();
+            }
+        }
+    }
 
-    return 0;
+    // La fonction main affiche le menu principal + caractère latin
+    int main() {
+        SetConsoleOutputCP(65001);
+
+        Menu();
+
+        return 0;
 }
