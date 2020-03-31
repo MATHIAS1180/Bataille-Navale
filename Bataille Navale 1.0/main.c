@@ -40,6 +40,7 @@ void Aide() {
     // redirige vers le menu
     Menu();
 }
+
 //Demande de choisir un pseudo
 int pseudo() {
     char pseudo[20];
@@ -52,8 +53,6 @@ int pseudo() {
     // Redirige vers le menu
     Menu();
 }
-
-
 
 
 // Initialisations des variables pour les HP des différent bateaux + déclaration de la variables du nombres d'essaie
@@ -252,9 +251,11 @@ void Tirer() {
     Jeu();
 }
 
-int Scores(){
+int Scores() {
     int Score;
-    Score = 10 / Nb_Essaie *10;
+    Score = 10 / Nb_Essaie * 10;
+    {    printf("----------Score----------\n");
+        printf("\nPseudo, vous avez un score de %d", Score);}
     return Score;
 }
 
