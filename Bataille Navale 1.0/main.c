@@ -253,10 +253,12 @@ void Tirer() {
 
 int Scores() {
     int Score;
-    Score = 10 / Nb_Essaie * 10;
-    {    printf("----------Score----------\n");
-        printf("\nPseudo, vous avez un score de %d", Score);}
-    return Score;
+    system("cls");
+    printf("------------------Score------------------\n");
+    printf("\nPseudo\nVous avez %d de scores.\n\n",Score);
+    system("pause");
+    // Redirige vers le menu
+    Menu();
 }
 
 
@@ -398,8 +400,9 @@ int Menu() {
         printf("\nBataille Navale");
         printf("\n1-Jouer\n");
         printf("2-Pseudo\n");
-        printf("3-Aide\n");
-        printf("4-Quitter\n");
+        printf("3-Score\n");
+        printf("4-Aide\n");
+        printf("5-Quitter\n");
         printf("\nFaite votre choix :");
         scanf("%d", &choixmenu);
         fflush(stdin);
@@ -412,10 +415,10 @@ int Menu() {
                 pseudo();
                 break;
             case 3 :
-                Aide();
+                Scores();
                 break;
             case 4 :
-                Scores();
+                Aide();
                 break;
             case 5 :
                 break;
