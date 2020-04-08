@@ -20,6 +20,20 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -65,6 +79,10 @@
       <workItem from="1585687086319" duration="1044000" />
       <workItem from="1585688149967" duration="910000" />
       <workItem from="1585815924012" duration="706000" />
+      <workItem from="1586347822214" duration="63000" />
+      <workItem from="1586348177266" duration="1176000" />
+      <workItem from="1586359465266" duration="3100000" />
+      <workItem from="1586372361104" duration="156000" />
     </task>
     <servers />
   </component>
@@ -88,9 +106,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1584441015506" />
-    <state x="656" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1585815923755">
+    <state x="656" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1586372360421">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585815923755" />
+    <state x="656" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586372360421" />
   </component>
 </project>
